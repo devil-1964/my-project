@@ -37,12 +37,12 @@ const DashBoardLayout = () => {
   return (
     <div className="dashboardLayout flex h-full">
       {isSidebarOpen && (
-        <div className={`menu z-10 max-w-fit sidebar  `}>
+        <div className={`menu  max-w-fit sidebar  `}>
           <ChatList />
         </div>
       )}
 
-      <div className="z-0 content flex flex-row gap-1 pt-1 pl-1 bg-[#242424] w-full h-full">
+      <div className=" content flex flex-row gap-1 pt-1 pl-1 bg-[#242424] w-full h-full">
         <SidebarToggleButton isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Outlet />
       </div>

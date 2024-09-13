@@ -4,7 +4,7 @@ const SidebarToggleButton = ({ isSidebarOpen, toggleSidebar }) => {
   return (
     <button
       onClick={toggleSidebar}
-      className={`p-2 absolute transition-transform duration-300 ${
+      className={`p-2 z-10 absolute transition-transform duration-300 ${
         isSidebarOpen ? "rotate-90" : "rotate-0"
       }`}
     >
