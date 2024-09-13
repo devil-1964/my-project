@@ -20,5 +20,42 @@ body{
     font-style: normal;
 }
 
+@keyframes scale-and-move {
+    0% {
+      transform: scale(1.02) translateY(-4px);
+    }
+    50% {
+      transform: scale(0.99) translateY(1px);
+    }
+    100% {
+        transform: scale(1.02) translateY(-4px);
+      }
+  }
+  
+  .sua {
+    animation: scale-and-move 3.4s infinite ease-in-out; 
+  }
 
+  .scrollBar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollBar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 
+.appear-animation {
+    animation: slideIn 0.3s forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

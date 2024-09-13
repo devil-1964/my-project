@@ -9,10 +9,10 @@ import DashBoardLayout from './layouts/DashBoardLayout';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key")
+  throw new Error("Missing Publishable Key");
 }
 
 const router = createBrowserRouter([
@@ -24,30 +24,27 @@ const router = createBrowserRouter([
         element: <Homepage />,
       },
       {
-        path: '/sign-in/*',
+        path: '/sign-in',
         element: <SignInPage />,
       },
       {
-        path: '/sign-up/*',
+        path: '/sign-up',
         element: <SignUpPage />,
       },
       {
-        path: '/',
+        element: <DashBoardLayout />,
         children: [
           {
-            element: <DashBoardLayout />,
-            children: [{
-              path: '/dashboard',
-              element: <DashboardPage />,
-            }]
+            path: '/dashboard',
+            element: <DashboardPage />,
           },
           {
             path: '/dashboard/chats/:id',
             element: <ChatPage />,
           },
         ],
-      }
-    ]
+      },
+    ],
   },
   {
     path: '*',
