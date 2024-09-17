@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import ChatList from "../components/ChatList";
 import SidebarToggleButton from "../components/SidebarToggleButton";
+import LoadingChats from "../components/LoadingChats";
+import LoadingList from "../components/LoadingList";
 
 const DashBoardLayout = () => {
   const { userId, isLoaded } = useAuth();
@@ -23,16 +25,29 @@ const DashBoardLayout = () => {
   }, []);
 
   useEffect(() => {
-    // if (isLoaded && !userId) {
-    //   navigate("/sign-in");
-    // }
+    if (isLoaded && !userId) {
+      navigate("/sign-in");
+    }
   }, [isLoaded, userId, navigate]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
-  if (!isLoaded) return "Loading...";
+  if (!isLoaded)  return (
+    <div className="dashboardLayout flex h-full ">
+      {isSidebarOpen && (
+        <div className={`menu  max-w-fit sidebar  `}>
+          <LoadingList />
+        </div>
+      )}
+
+      <div className=" content flex flex-row gap-1 pt-1 pl-1 bg-[#242424] w-full h-full">
+        <SidebarToggleButton isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <LoadingChats/>
+      </div>
+    </div>
+  );
 
   return (
     <div className="dashboardLayout flex h-full">

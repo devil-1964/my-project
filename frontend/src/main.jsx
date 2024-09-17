@@ -8,6 +8,12 @@ import RootLayout from './layouts/rootLayout';
 import DashBoardLayout from './layouts/DashBoardLayout';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
+import NotFound from './pages/NotFound';
+import { ClerkProvider } from '@clerk/clerk-react';
+import { dark } from '@clerk/themes'
+import {QueryClient,QueryClientProvider} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -48,10 +54,29 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: <h1>404 Not Found</h1>,
+    element: <NotFound />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <ClerkProvider
+    appearance={{
+      layout: {
+        unsafe_disableDevelopmentModeWarnings: true,
+      },
+      variables: {
+        spacingUnit: '0.85rem'
+      },
+      baseTheme: dark,
+      elements: {
+        card: {
+          maxHeight: '23rem',
+        },
+      },
+    }}
+    publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </ClerkProvider>
 );
