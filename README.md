@@ -6,7 +6,7 @@ Welcome to IntelliChat, a modern chat application designed with an intuitive use
 ## Demo
 
 ### Video Demo
-[![IntelliChat Video Demo](/frontend/public/image.png)](https://youtu.be/z2s2T8kyn7A?si=d41LiIUO_b19blRg)
+[![IntelliChat Video Demo](/frontend/public/image.png)](https://www.youtube.com/watch?v=z2s2T8kyn7A)
 
 ## Features
 
