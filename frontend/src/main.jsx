@@ -30,11 +30,11 @@ const router = createBrowserRouter([
         element: <Homepage />,
       },
       {
-        path: '/sign-in',
+        path: '/sign-in/*',
         element: <SignInPage />,
       },
       {
-        path: '/sign-up',
+        path: '/sign-up/*',
         element: <SignUpPage />,
       },
       {
@@ -65,7 +65,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         unsafe_disableDevelopmentModeWarnings: true,
       },
       variables: {
-        spacingUnit: '0.85rem'
+        spacingUnit: '0.56rem'
       },
       baseTheme: dark,
       elements: {

@@ -6,18 +6,19 @@ import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
   const queryClient = new QueryClient()
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const mutation = useMutation({
-    mutationFn: (text)=>
-      {return   fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
+    mutationFn: (text) => {
+      return fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
         method: "POST",
-        credentials:"include",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({  text }),
-      }).then((res)=>res.json())}
-      ,
+        body: JSON.stringify({ text }),
+      }).then((res) => res.json())
+    }
+    ,
     onSuccess: (id) => {
       queryClient.invalidateQueries({ queryKey: ['userChats'] });
       navigate(`/dashboard/chats/${id}`)
@@ -28,7 +29,7 @@ const DashboardPage = () => {
     const text = e.target.text.value;
     if (!text) return;
     mutation.mutate(text);
-   
+
   };
 
   return (

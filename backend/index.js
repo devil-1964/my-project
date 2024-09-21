@@ -32,18 +32,13 @@ app.get("/api/upload", (req, res) => {
   res.send(result);
 });
 
-// app.get("/api/test", ClerkExpressRequireAuth(), (req, res) => {
-//   const userId=req.auth.userId;
-//     console.log(userId);
-//   res.send("Success");
-// });
 
 app.post(
   "/api/chats",
   ClerkExpressRequireAuth(),
 
   async (req, res) => {
-    const userId=req.auth.userId;
+    const userId = req.auth.userId;
     const { text } = req.body;
     try {
       const newChat = new Chat({
@@ -52,8 +47,8 @@ app.post(
       });
       const savedChat = await newChat.save();
 
-      const userChats = await UserChats.findOne({ userId: userId });
-      if (!userChats) {
+      const userChats = await UserChats.find({ userId: userId });
+      if (!userChats.length) {  //error
         const newUserChats = new UserChats({
           userId: userId,
           chats: [
@@ -76,8 +71,8 @@ app.post(
             },
           }
         );
-        res.status(201).send(newChat._id);
       }
+      res.status(201).send(savedChat._id);
     } catch (err) {
       console.log(err);
       res.status(500).send("Error creating chat");
@@ -86,58 +81,60 @@ app.post(
 );
 
 app.get("/api/userchats", ClerkExpressRequireAuth(), async (req, res) => {
-    const userId = req.auth.userId;
+  const userId = req.auth.userId;
 
-    try {
-        const userChats = await UserChats.find({ userId });
-        res.status(200).json(userChats[0].chats);
-    } catch (err) {
-        console.error(err); 
-        res.status(500).send("Error fetching user chats.");
+  try {
+    const userChats = await UserChats.find({ userId });
+    if (!userChats.length || !userChats[0].chats) {  
+    res.status(200).send([]);
     }
+    else{
+      res.status(200).send(userChats[0].chats);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error fetching user chats.");
+  }
 });
 
 app.get("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
-    const userId = req.auth.userId;
+  const userId = req.auth.userId;
 
-    try {
-        const chat = await Chat.findOne({ _id:req.params.id,userId });
-        res.status(200).json(chat);
-    } catch (err) {
-        console.error(err); 
-        res.status(500).send("Error fetching user chats.");
-    }
+  try {
+    const chat = await Chat.findOne({ _id: req.params.id, userId });
+    res.status(200).send(chat);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching user chats.");
+  }
 });
 
-app.put("/api/chats/:id",ClerkExpressRequireAuth(),
-async(req,res)=>{
-    const userId = req.auth.userId;
-    const {question,answer,img}=req.body;
-    const newItems=[
-        ...(question ? [{role:"user",
-            parts:[{text:question}], ...(img && {img})
-        }]:[]),
-        {role:"model",
-            parts:[{text:answer}]
-        }
-    ]
-    try{
-        const updatedChat=await Chat.updateOne({_id:req.params.id,userId},{
-            $push:{
-                history:{
-                    $each:newItems,
-                }
-            }
-        })
-    }
-    catch(err)
-    {
-        console.log(err);
-        res.status(500).send("Error adding conversation")
-    }
-
-}
-)
+app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId;
+  const { question, answer, img } = req.body;
+  const newItems = [
+    ...(question
+      ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }]
+      : []),
+    { role: "model", parts: [{ text: answer }] },
+  ];
+  try {
+    const updatedChat = await Chat.updateOne(
+      { _id: req.params.id, userId },
+      {
+        $push: {
+          history: {
+            $each: newItems,
+          },
+        },
+      }
+    );
+    res.status(200).send(updatedChat);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error adding conversation");
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

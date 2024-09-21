@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 import { useQuery } from "@tanstack/react-query"
 const ChatList = () => {
 
+    const { id } = useParams();
     const { isPending, error, data } = useQuery({
         queryKey: ["userChats"],
         queryFn: () =>
@@ -25,8 +27,8 @@ const ChatList = () => {
           : error
           ? "Something went wrong!"
           : data?.map((chat) => (
-              <Link to={`/dashboard/chats/${chat._id}`} className='hoverChat px-1' key={chat._id}>
-                {chat.title}
+              <Link to={`/dashboard/chats/${chat._id}`} className={`hoverChat px-1 ${chat._id==id ?" bg-[#3e3a3e] rounded-md":""}`} key={chat._id}>
+                <span className={` `}>{chat.title}</span>
               </Link>
             ))}
             </div>

@@ -3,6 +3,7 @@ import NewPrompt from "../components/NewPrompt";
 import { useQuery } from "@tanstack/react-query";
 import Markdown from "react-markdown";
 import { IKImage } from "imagekitio-react";
+import PropTypes from "prop-types";
 
 const Message = ({ message }) => (
   <>
@@ -23,12 +24,24 @@ const Message = ({ message }) => (
           ? "message bg-[#3e3a3e] p-3 rounded-xl max-w-[70%] text-justify ml-auto user"
           : "message user w-fit p-2 max-w-[80%]"
       }
-      key={message.id} // Assuming each message has a unique `id`
+
     >
       <Markdown>{message.parts[0].text}</Markdown>
     </div>
   </>
 );
+
+Message.propTypes = {
+  message: PropTypes.shape({
+    role: PropTypes.string.isRequired,
+    img: PropTypes.string,
+    parts: PropTypes.arrayOf(
+      PropTypes.shape({
+        text: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
+};
 
 const ChatPage = () => {
   const path = useLocation().pathname;
