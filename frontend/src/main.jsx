@@ -4,7 +4,7 @@ import './index.css';
 import Homepage from './pages/Homepage';
 import DashboardPage from './pages/DashboardPage';
 import ChatPage from './pages/ChatPage';
-import RootLayout from './layouts/rootLayout';
+import RootLayout from './layouts/RootLayout';
 import DashBoardLayout from './layouts/DashBoardLayout';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
