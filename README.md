@@ -25,4 +25,4 @@ Welcome to IntelliChat, a modern chat application designed with an intuitive use
 - **Backend**:
   - Node.js 🚀
   - MongoDB 🗄️
-  - Clerk for authentication 🗄️
+  - Clerk for authentication 🔐
