@@ -60,10 +60,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ClerkProvider
-  signInForceRedirectUrl="/dashboard"
-  signInFallbackRedirectUrl="/sign-in"
-  signUpFallbackRedirectUrl="/sign-up"
-  signUpForceRedirectUrl="/dashboard"
     appearance={{
       layout: {
         unsafe_disableDevelopmentModeWarnings: true,
